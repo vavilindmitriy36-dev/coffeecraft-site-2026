@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>☕ CoffeeCraft | Кофейня и десерты</title>
+  <meta name="description" content="Заказывайте свежий кофе, десерты и забронируйте столик онлайн.">
+  <link rel="stylesheet" href="style.css">
+
+  <!-- Open Graph / Соцсети и мессенджеры -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="CoffeeCraft — Уютная кофейня">
+  <meta property="og:description" content="Заказывайте авторский кофе, десерты и бронируйте столики онлайн.">
+  <meta property="og:image" content="https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?w=800">
+
+  <!-- Микроразметка Schema.org для Google -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "CafeOrCoffeeShop",
+    "name": "CoffeeCraft",
+    "image": "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Алматы",
+      "streetAddress": "ул. Кофейная, 15"
+    },
+    "telephone": "+77001234567",
+    "openingHours": "Mo-Su 08:00-22:00",
+    "priceRange": "$$"
+  }
+  </script>
+</head>
+<body>
+
+  <!-- Шапка -->
+  <header class="header">
+    <div class="container header-container">
+      <a href="#" class="logo">☕ CoffeeCraft</a>
+      <nav class="nav">
+        <a href="#menu">Меню</a>
+        <a href="#promos">Акции</a>
+        <a href="#booking">Бронь</a>
+      </nav>
+      <button class="cart-btn" id="cartToggleBtn">
+        🛒 <span id="cartCount">0</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Баннер -->
+  <section class="hero">
+    <div class="container hero-content">
+      <h1>Идеальный кофе для вашего дня</h1>
+      <p>Свежеобжаренные зёрна, авторские напитки и нежнейшие десерты.</p>
+      <a href="#menu" class="btn">Смотреть меню</a>
+    </div>
+  </section>
+
+  <!-- Меню -->
+  <section class="menu-section" id="menu">
+    <div class="container">
+      <h2>Наше Меню</h2>
+
+      <!-- Поисковик -->
+      <div class="search-box">
+        <input type="text" id="searchInput" placeholder="🔍 Поиск блюда или напитка...">
+      </div>
+
+      <!-- Категории -->
+      <div class="categories" id="categoryFilters">
+        <button class="cat-btn active" data-category="all">Всё</button>
+        <button class="cat-btn" data-category="coffee">Кофе</button>
+        <button class="cat-btn" data-category="desserts">Десерты</button>
+        <button class="cat-btn" data-category="drinks">Напитки</button>
+      </div>
+
+      <!-- Сетка товаров -->
+      <div class="products-grid" id="productsGrid"></div>
+    </div>
+  </section>
+
+  <!-- Акции и новости -->
+  <section class="promo-section" id="promos">
+    <div class="container">
+      <h2>Акции и Новости</h2>
+      <div class="promos-grid" id="promosGrid"></div>
+    </div>
+  </section>
+
+  <!-- Бронирование столика -->
+  <section class="booking-section" id="booking">
+    <div class="container">
+      <h2>Забронировать столик</h2>
+      <form id="bookingForm" class="form-card">
+        <div class="form-group">
+          <label>Имя</label>
+          <input type="text" id="bookName" required placeholder="Ваше имя">
+        </div>
+        <div class="form-group">
+          <label>Телефон</label>
+          <input type="tel" id="bookPhone" required placeholder="+7 (700) 000-00-00">
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Дата</label>
+            <input type="date" id="bookDate" required>
+          </div>
+          <div class="form-group">
+            <label>Время</label>
+            <input type="time" id="bookTime" required>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Количество гостей</label>
+          <select id="bookGuests">
+            <option value="1">1 человек</option>
+            <option value="2" selected>2 человека</option>
+            <option value="3">3 человека</option>
+            <option value="4">4+ человек</option>
+          </select>
+        </div>
+        <button type="submit" class="btn btn-full">Забронировать</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- Модальное окно корзины -->
+  <div class="cart-modal" id="cartModal">
+    <div class="cart-content">
+      <div class="cart-header">
+        <h3>Ваш заказ</h3>
+        <button class="close-btn" id="closeCartBtn">&times;</button>
+      </div>
+
+      <div class="cart-items" id="cartItems"></div>
+
+      <div class="cart-footer">
+        <div class="total-price">Итого: <span id="cartTotal">0</span> ₸</div>
+
+        <form id="orderForm" class="order-form">
+          <input type="text" id="clientName" placeholder="Ваше имя" required>
+          <input type="tel" id="clientPhone" placeholder="Номер телефона" required>
+          <select id="orderType">
+            <option value="takeaway">С собой</option>
+            <option value="hall">В заведении</option>
+          </select>
+          <button type="submit" class="btn checkout-btn">Оформить заказ</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Подвал и Контакты -->
+  <footer class="footer">
+    <div class="container footer-grid">
+      <div class="footer-info">
+        <h3>☕ CoffeeCraft</h3>
+        <p>📍 г. Алматы, ул. Кофейная, 15</p>
+        <p>🕐 Ежедневно: 08:00 — 22:00</p>
+        <p>📞 <a href="tel:+77001234567">+7 (700) 123-45-67</a></p>
+      </div>
+      <div class="footer-socials">
+        <h4>Мы в соцсетях</h4>
+        <div class="social-icons-row">
+          <a href="https://wa.me/77001234567" target="_blank" class="social-box wa" title="WhatsApp">
+            <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+              <path d="M12.012 2c-5.506 0-9.989 4.478-9.99 9.984a9.96 9.96 0 001.333 4.993L2 22l5.233-1.237a9.96 9.96 0 004.779 1.217h.004c5.505 0 9.988-4.478 9.989-9.985 0-2.669-1.038-5.176-2.925-7.062A9.92 9.92 0 0012.012 2zm0 18.232h-.003a8.28 8.28 0 01-4.223-1.163l-.303-.18-3.137.742.825-3.056-.197-.313a8.27 8.27 0 01-1.266-4.321c0-4.568 3.718-8.285 8.289-8.285 2.213 0 4.292.862 5.857 2.428a8.23 8.23 0 012.422 5.86c0 4.568-3.717 8.285-8.286 8.285z"/>
+            </svg>
+          </a>
+          <a href="#" target="_blank" class="social-box ig" title="Instagram">
+            <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+              <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+            </svg>
+          </a>
+          <a href="#" target="_blank" class="social-box tg" title="Telegram">
+            <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+              <path d="M12 0C5.37 0 0 5.37 0 12s5.37 12 12 12 12-5.37 12-12S18.63 0 12 0zm5.56 8.16l-1.97 9.28c-.15.67-.54.83-1.1.52l-3.03-2.23-1.46 1.41c-.16.16-.3.3-.61.3l.22-3.07 5.58-5.04c.24-.22-.05-.34-.37-.13l-6.9 4.35-2.98-.93c-.65-.2-.66-.65.14-.96l11.66-4.5c.54-.2 1.01.12.84.92z"/>
+            </svg>
+          </a>
+          <a href="#" target="_blank" class="social-box tt" title="TikTok">
+            <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+              <path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.82.56-1.31 1.55-1.28 2.54.02.82.42 1.61 1.08 2.09.84.62 1.98.71 2.9.27.87-.41 1.46-1.27 1.54-2.22.03-3.68.01-7.36.02-11.04z"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 CoffeeCraft. Проект для портфолио. | <a href="admin.html" style="color: rgba(255,255,255,0.4);">Панель администратора</a></p>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
