@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Админ-панель | CoffeeCraft</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* Дополнительные стили для Админки */
+    .admin-body { background: #f0f2f5; }
+    .login-container { max-width: 360px; margin: 80px auto; padding: 20px; }
+    .admin-nav { display: flex; gap: 8px; overflow-x: auto; margin-bottom: 20px; }
+    .admin-tab { padding: 10px 16px; background: #fff; border: 1px solid var(--border-color); border-radius: 8px; cursor: pointer; white-space: nowrap; font-size: 0.9rem; }
+    .admin-tab.active { background: var(--primary); color: #fff; font-weight: 600; }
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
+    .data-card { background: #fff; padding: 15px; border-radius: 8px; margin-bottom: 12px; box-shadow: var(--shadow); }
+    .status-badge { padding: 4px 8px; border-radius: 4px; font-size: 0.8rem; font-weight: 600; }
+    .status-new { background: #fff3cd; color: #856404; }
+    .status-done { background: #d4edda; color: #155724; }
+    .action-btn { padding: 4px 8px; border: none; border-radius: 4px; cursor: pointer; font-size: 0.8rem; }
+    .btn-danger { background: #dc3545; color: #fff; }
+    .btn-success { background: #28a745; color: #fff; }
+  </style>
+</head>
+<body class="admin-body">
+
+  <!-- Окно авторизации -->
+  <div id="authBlock" class="login-container">
+    <form id="loginForm" class="form-card">
+      <h2 style="text-align: center; margin-bottom: 15px;">🔒 Вход в панель</h2>
+      <div class="form-group">
+        <label>Логин</label>
+        <input type="text" id="adminLogin" required placeholder="admin">
+      </div>
+      <div class="form-group">
+        <label>Пароль</label>
+        <input type="password" id="adminPass" required placeholder="admin123">
+      </div>
+      <button type="submit" class="btn btn-full">Войти</button>
+      <p style="text-align: center; margin-top: 10px; font-size: 0.8rem; color: #777;">Тестовые данные: admin / admin123</p>
+    </form>
+  </div>
+
+  <!-- Главная Панель Управления -->
+  <div id="adminPanel" style="display: none;">
+    <header class="header">
+      <div class="container header-container">
+        <a href="index.html" class="logo">☕ CoffeeCraft Admin</a>
+        <button id="logoutBtn" class="action-btn btn-danger">Выйти</button>
+      </div>
+    </header>
+
+    <main class="container" style="padding-top: 20px;">
+      <!-- Вкладки меню -->
+      <div class="admin-nav">
+        <button class="admin-tab active" data-tab="orders">🛒 Заказы</button>
+        <button class="admin-tab" data-tab="bookings">📅 Бронирования</button>
+        <button class="admin-tab" data-tab="menu">🍰 Управление меню</button>
+        <button class="admin-tab" data-tab="promos">🎁 Акции</button>
+      </div>
+
+      <!-- Вкладка: Заказы -->
+      <section id="orders" class="tab-content active">
+        <h3>Заказы клиентов</h3>
+        <div id="ordersList" style="margin-top: 15px;"></div>
+      </section>
+
+      <!-- Вкладка: Бронирования -->
+      <section id="bookings" class="tab-content">
+        <h3>Бронирования столиков</h3>
+        <div id="bookingsList" style="margin-top: 15px;"></div>
+      </section>
+
+      <!-- Вкладка: Меню -->
+      <section id="menu" class="tab-content">
+        <h3>Добавить товар в меню</h3>
+        <form id="addProductForm" class="form-card" style="margin-bottom: 20px;">
+          <div class="form-group"><label>Название</label><input type="text" id="pName" required></div>
+          <div class="form-group">
+            <label>Категория</label>
+            <select id="pCat"><option value="coffee">Кофе</option><option value="desserts">Десерты</option><option value="drinks">Напитки</option></select>
+          </div>
+          <div class="form-group"><label>Цена (₸)</label><input type="number" id="pPrice" required></div>
+          <div class="form-group"><label>Описание</label><input type="text" id="pDesc" required></div>
+          <div class="form-group"><label>Ссылка на фото</label><input type="url" id="pImg" required placeholder="https://..."></div>
+          <button type="submit" class="btn btn-full">Добавить товар</button>
+        </form>
+
+        <h3>Текущее меню</h3>
+        <div id="adminMenuList" style="margin-top: 10px;"></div>
+      </section>
+
+      <!-- Вкладка: Акции -->
+      <section id="promos" class="tab-content">
+        <h3>Добавить акцию</h3>
+        <form id="addPromoForm" class="form-card" style="margin-bottom: 20px;">
+          <div class="form-group"><label>Заголовок</label><input type="text" id="prTitle" required></div>
+          <div class="form-group"><label>Описание</label><input type="text" id="prDesc" required></div>
+          <div class="form-group"><label>Ссылка на картинку</label><input type="url" id="prImg" required></div>
+          <button type="submit" class="btn btn-full">Добавить акцию</button>
+        </form>
+
+        <h3>Текущие акции</h3>
+        <div id="adminPromosList" style="margin-top: 10px;"></div>
+      </section>
+    </main>
+  </div>
+
+  <script src="admin.js"></script>
+</body>
+</html>
